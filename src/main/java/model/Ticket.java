@@ -5,13 +5,19 @@ public class Ticket {
     //ATTRIBUTI
     private double travelKm;
     private double agePerson;
-    private double priceForKm = 0.21;
-    private double discountunder18 = 0.20;
+    private final double PRICE_FOR_KM = 0.21;
+    private final double DISCOUNT_UNDER_18 = 0.20;
     // sconto per gli over 65
-    private double discountover65 = 0.40;
+    private final double DISCOUNT_OVER_65 = 0.40;
 
     //COSTRUTTORE
-    public Ticket( double travelKm, double priceForKm, double agePerson) {
+    public Ticket( double travelKm, double PRICE_FOR_KM, double agePerson) {
+        if (travelKm <= 0){
+            throw new IllegalArgumentException("Km must be > 0");
+        }
+        if (agePerson <= 0){
+            throw new IllegalArgumentException("The person's must be > 0");
+        }
         this.travelKm = travelKm;
         this.agePerson = agePerson;
     }
@@ -22,7 +28,7 @@ public class Ticket {
     }
 
     public double getPriceForKm() {
-        return priceForKm;
+        return PRICE_FOR_KM;
     }
 
     public double getAgePerson() {
@@ -41,12 +47,12 @@ public class Ticket {
     public double calculatePrice(double resultPrice){
         if (agePerson < 18){
             //Se l'età è minore di 18 anni allora:
-            resultPrice = (travelKm * priceForKm) * discountunder18;
+            resultPrice = (travelKm * PRICE_FOR_KM) * DISCOUNT_UNDER_18;
         } else if(agePerson > 65) {
             //Se l'età è maggiore di 65 anni allora:
-            resultPrice =  (travelKm * priceForKm) * discountover65;
+            resultPrice =  (travelKm * PRICE_FOR_KM) * DISCOUNT_OVER_65;
         }else {
-            resultPrice = travelKm * priceForKm;
+            resultPrice = travelKm * PRICE_FOR_KM;
         }
         return resultPrice;
     }
